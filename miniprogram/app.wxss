@@ -1,0 +1,10 @@
+/**app.wxss**/
+.container {
+  height: 100vh;
+  box-sizing: border-box;
+  background-color: rgb(230, 230, 230);
+}
+
+page {
+  --sidebar-selected-border-color: #0099ff;
+}

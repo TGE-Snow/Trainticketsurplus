@@ -1,0 +1,24 @@
+<page-meta page-style="{{ selectShow ? 'overflow: hidden;' : '' }}" />
+<view class="container" style="padding: 0px 20px;background-color: #fff;">
+  <van-sticky>
+    <van-search value="{{ searchValue }}" placeholder="请输入搜索关键词" bind:focus="searchFocus" bind:change="searchInput" />
+  </van-sticky>
+  <van-index-bar>
+    <view wx:for="{{stationList}}" wx:for-item="item" wx:key="index">
+      <van-index-anchor index="{{item.sx}}" />
+      <view wx:for="{{item.list}}" wx:for-item="subItem" wx:for-index="subIndex" wx:key="subIndex">
+        <van-cell wx:if="{{subIndex < 5 || item.expand}}" title="{{subItem.name}}" clickable="{{true}}"
+          data-item="{{subItem}}" bind:click="selectTrain" />
+      </view>
+      <view style="height: 30px;display: flex;justify-content: center;align-items: center;font-size: 12px;"
+        bindtap="expandFunc" data-index="{{index}}">
+        {{item.expand?"收起":"展开更多"}} </view>
+    </view>
+  </van-index-bar>
+
+  <van-popup show="{{ selectShow }}" position="top" lock-scroll="false" custom-style="margin-top:54px"
+    overlay-style="margin-top:54px" bind:close="popupClose">
+    <van-cell wx:for="{{searchList}}" wx:for-item="item" wx:key="index" title="{{item.name}}" clickable="{{true}}"
+      data-item="{{item}}" bind:click="selectTrain" />
+  </van-popup>
+</view>

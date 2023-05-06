@@ -1,0 +1,106 @@
+<!--index.wxml-->
+<view class="container">
+  <scroll-view scroll-y="true" style="height: 100%;" bindscroll="scrollView">
+    <view style="height: 150px;padding: 0px 1rem 20px 1rem;display: flex;flex-direction: column;justify-content: space-between;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;background-color: rgb(255, 255, 255);">
+      <view style="height: 50px;border-bottom: 1px solid rgb(224, 224, 224);display: flex;justify-content: space-between;">
+        <view style="height: 49px;width: 40%;display: flex;justify-content: center;align-items: center;" bindtap="selectTrainStart">
+          <view style="{{trainStartCode?'':'color:#a7a6a6;'}}">{{trainStart}}</view>
+        </view>
+        <van-icon name="sort" style="transform: rotate(90deg);" bindtap="changeTrain" />
+        <view style="height: 49px;width: 40%;display: flex;justify-content: center;align-items: center;" bindtap="selectTrainEnd">
+          <view style="{{trainEndCode?'':'color:#a7a6a6;'}}">{{trainEnd}}</view>
+        </view>
+      </view>
+      <view style="height: 50px;border-bottom: 1px solid rgb(224, 224, 224);line-height: 50px;display: flex;" bindtap="selectDate">
+        <span style="font-size: 16px;font-weight: 600;padding-right: 8px;">{{calendarDay}}</span>
+        <span style="font-size: 13px;">{{calendarWeek}}</span>
+      </view>
+      <view style="height: 30px;padding: 10px 0px;">
+        <van-button type="info" size="large" round bind:click="searchTrain">查询列车</van-button>
+      </view>
+    </view>
+
+    <view>
+      <view wx:for="{{trainInfoList}}" wx:key="index" style="display: flex;flex-direction: column;height: 90px;background-color: rgb(252, 252, 252);margin: 8px;border-radius: 10px;" data-item="{{item}}" bindtap="clickTrain">
+        <view style="height:60px;display: flex;justify-content: space-between;justify-items: center;align-items: center;">
+          <view style="width: 40%;">
+            <view style="display: flex;justify-content: center;font-weight: bolder;">{{item.start_time}}</view>
+            <view style="display: flex;justify-content: center;font-size: 14px;">{{item.from_station_telecodeStr}}</view>
+          </view>
+          <view style="width:20%;display: flex;flex-direction: column;font-size: 13px;">
+            <view style="display: flex;justify-content: center;">
+              {{item.lishi}}
+            </view>
+            <view style="border-bottom: 1px solid rgb(172, 172, 172);"></view>
+            <view style="display: flex;justify-content: center;">{{item.station_train_code}}</view>
+          </view>
+          <view style="width: 40%;">
+            <view style="display: flex;justify-content: center;font-weight: bolder;">{{item.arrive_time}}</view>
+            <view style="display: flex;justify-content: center;font-size: 14px;">{{item.to_station_telecodeStr}}</view>
+          </view>
+        </view>
+        <view style="display: flex;justify-content: space-around;font-size: 13px;color:rgb(119, 119, 119);align-items: center;line-height: 30px;">
+          <view wx:if="{{item.tz_num}}">特等座
+            <span style="{{item.tz_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{item.tz_num}}
+            </span>
+          </view>
+          <view wx:if="{{item.swz_num}}">商务座
+            <span style="{{item.swz_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{item.swz_num}}
+            </span>
+          </view>
+          <view wx:if="{{item.zy_num}}">一等座
+            <span style="{{item.zy_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{item.zy_num}}
+            </span>
+          </view>
+          <view wx:if="{{item.ze_num}}">二等座
+            <span style="{{item.ze_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{item.ze_num}}
+            </span>
+          </view>
+          <view wx:if="{{item.gg_num}}">高级软卧
+            <span style="{{item.gg_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{item.gg_num}}
+            </span>
+          </view>
+          <view wx:if="{{item.rw_num}}">软卧
+            <span style="{{item.rw_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{item.rw_num}}
+            </span>
+          </view>
+          <view wx:if="{{item.yw_num}}">硬卧
+            <span style="{{item.yw_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{item.yw_num}}
+            </span>
+          </view>
+          <view wx:if="{{item.rz_num}}">软座
+            <span style="{{item.rz_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{item.rz_num}}
+            </span>
+          </view>
+          <view wx:if="{{item.yz_num}}">硬座
+            <span style="{{item.yz_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{item.yz_num}}
+            </span>
+          </view>
+          <view wx:if="{{item.gr_num}}">高软
+            <span style="{{item.gr_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{item.gr_num}}
+            </span>
+          </view>
+          <view wx:if="{{item.yb_num}}">yb
+            <span style="{{item.yb_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{item.yb_num}}
+            </span>
+          </view>
+          <view wx:if="{{item.srrb_num}}">srrb
+            <span style="{{item.srrb_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{item.srrb_num}}
+            </span>
+          </view>
+          <view wx:if="{{item.wz_num}}">无座
+            <span style="{{item.wz_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{item.wz_num}}
+            </span>
+          </view>
+          <view wx:if="{{item.qt_num}}">其他
+            <span style="{{item.qt_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{item.qt_num}}
+            </span>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+
+  <van-calendar show="{{ calendarShow }}" bind:close="calendarClose" bind:confirm="calendarConfirm" color="#0099ff" />
+</view>

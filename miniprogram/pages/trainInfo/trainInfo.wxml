@@ -1,0 +1,104 @@
+<view class="container" style="display: flex;flex-direction: column;">
+  <van-sticky style="height: 40px;display: flex;flex-direction: column;">
+    <view style="display: flex;justify-content: space-around;background-color: #fff;line-height: 40px;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;">
+      <view style="font-size: 14px;">车次:
+        <span style="color: rgb(0, 153, 255);font-size: 12px;">{{train}}</span>
+      </view>
+      <view style="font-size: 14px;">时间:
+        <span style="color: rgb(0, 153, 255);font-size: 12px;">{{date}}</span>
+      </view>
+    </view>
+  </van-sticky>
+
+  <view style="flex:1;margin-top: 5px;display: flex;overflow-y: scroll;">
+    <scroll-view scroll-y="true" scroll-into-view="a_{{activeTrain}}" style="width: 100px;">
+      <van-sidebar active-key="{{ activeTrain }}" bind:change="collapseChange">
+        <van-sidebar-item wx:for="{{activeList}}" id="a_{{index}}" wx:key="index">
+          <view slot="title">
+            <view style="font-size: 12px;color: rgb(83, 83, 83);">
+              {{item.station_name}}
+            </view>
+            <view style="font-size: 12px;color: rgb(83, 83, 83);">
+              {{item.start_time}}
+            </view>
+            <view style="font-size: 10px;color: rgb(83, 83, 83);">
+              停{{item.stopover_time}}
+            </view>
+          </view>
+        </van-sidebar-item>
+      </van-sidebar>
+    </scroll-view>
+    <view style="overflow-y: scroll;width: 100%;">
+      <van-cell wx:for="{{activeList[activeTrain].loadList}}" wx:for-item="loadItem" wx:for-index="loadIndex" wx:key="loadIndex" use-label-slot>
+        <view slot="title">
+          <span style="font-size: 12px;color: rgb(56, 56, 56);">到{{loadItem.station_name}}</span>
+          <span style="font-size: 12px;color: rgb(56, 56, 56);">-{{loadItem.arrive_time}}</span>
+          <span style="font-size: 10px;color: rgb(56, 56, 56);">-停{{loadItem.stopover_time}}</span>
+        </view>
+        <view wx:if="{{loadItem.seat}}" slot="label">
+          <view wx:if="{{loadItem.seat == 'error'}}">没有查到该车信息,请确认是否已发车!</view>
+          <view wx:else style="display: flex;justify-content: space-around;font-size: 12px;align-items: center;line-height: 30px;">
+            <view wx:if="{{loadItem.seat.tz_num}}">特等座
+              <span style="{{loadItem.seat.tz_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{loadItem.seat.tz_num}}
+              </span>
+            </view>
+            <view wx:if="{{loadItem.seat.swz_num}}">商务座
+              <span style="{{loadItem.seat.swz_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{loadItem.seat.swz_num}}
+              </span>
+            </view>
+            <view wx:if="{{loadItem.seat.zy_num}}">一等座
+              <span style="{{loadItem.seat.zy_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{loadItem.seat.zy_num}}
+              </span>
+            </view>
+            <view wx:if="{{loadItem.seat.ze_num}}">二等座
+              <span style="{{loadItem.seat.ze_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{loadItem.seat.ze_num}}
+              </span>
+            </view>
+            <view wx:if="{{loadItem.seat.gg_num}}">高级软卧
+              <span style="{{loadItem.seat.gg_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{loadItem.seat.gg_num}}
+              </span>
+            </view>
+            <view wx:if="{{loadItem.seat.rw_num}}">软卧
+              <span style="{{loadItem.seat.rw_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{loadItem.seat.rw_num}}
+              </span>
+            </view>
+            <view wx:if="{{loadItem.seat.yw_num}}">硬卧
+              <span style="{{loadItem.seat.yw_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{loadItem.seat.yw_num}}
+              </span>
+            </view>
+            <view wx:if="{{loadItem.seat.rz_num}}">软座
+              <span style="{{loadItem.seat.rz_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{loadItem.seat.swz_num}}
+              </span>
+            </view>
+            <view wx:if="{{loadItem.seat.yz_num}}">硬座
+              <span style="{{loadItem.seat.yz_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{loadItem.seat.yz_num}}
+              </span>
+            </view>
+            <view wx:if="{{loadItem.seat.gr_num}}">高软
+              <span style="{{loadItem.seat.gr_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{loadItem.seat.gr_num}}
+              </span>
+            </view>
+
+            <view wx:if="{{loadItem.seat.yb_num}}">yb
+              <span style="{{loadItem.seat.yb_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{loadItem.seat.yb_num}}
+              </span>
+            </view>
+            <view wx:if="{{loadItem.seat.srrb_num}}">srrb
+              <span style="{{loadItem.seat.srrb_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{loadItem.seat.srrb_num}}
+              </span>
+            </view>
+            <view wx:if="{{loadItem.seat.wz_num}}">无座
+              <span style="{{loadItem.seat.wz_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{loadItem.seat.wz_num}}
+              </span>
+            </view>
+            <view wx:if="{{loadItem.seat.qt_num}}">其他
+              <span style="{{loadItem.seat.qt_num=='无'?'':'padding-left: 2px;color: rgb(83, 158, 255);'}}">{{loadItem.seat.qt_num}}
+              </span>
+            </view>
+          </view>
+        </view>
+        <view wx:else style="font-size: 10px;">加载中...</view>
+      </van-cell>
+    </view>
+  </view>
+</view>

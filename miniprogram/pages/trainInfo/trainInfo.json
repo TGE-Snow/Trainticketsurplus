@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "van-collapse": "@vant/weapp/collapse/index",
+    "van-collapse-item": "@vant/weapp/collapse-item/index",
+    "van-cell": "@vant/weapp/cell/index",
+    "van-sticky": "@vant/weapp/sticky/index",
+    "van-sidebar": "@vant/weapp/sidebar/index",
+    "van-sidebar-item": "@vant/weapp/sidebar-item/index"
+  },
+  "navigationBarTitleText": "余票查询"
+}
