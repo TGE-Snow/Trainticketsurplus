@@ -111,14 +111,16 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-
+        this.setData({
+            adStatus: 0
+        });
     },
 
     /**
      * 生命周期函数--监听页面隐藏
      */
     onHide: function () {
-
+        clearTimeout(setTimeOutFunc)
     },
 
     /**
@@ -147,5 +149,32 @@ Page({
      */
     onShareAppMessage: function () {
 
-    }
+    },
+    ad0Load() {
+        wx.reportEvent && wx.reportEvent("wxdata_perf_monitor", {
+            "wxdata_perf_monitor_id": "视频广告 广告加载成功",
+            "wxdata_perf_monitor_level": 1,
+            "wxdata_perf_error_code": 0,
+            "wxdata_perf_error_msg": "",
+            "wxdata_perf_cost_time": 0
+        })
+    },
+    ad0Error(err) {
+        console.error('视频广告 广告加载失败', err)
+        this.setData({
+            adStatus: 1
+        });
+    },
+    ad1Load() {
+        wx.reportEvent && wx.reportEvent("wxdata_perf_monitor", {
+            "wxdata_perf_monitor_id": "Banner 广告加载成功",
+            "wxdata_perf_monitor_level": 1,
+            "wxdata_perf_error_code": 0,
+            "wxdata_perf_error_msg": "",
+            "wxdata_perf_cost_time": 0
+        })
+    },
+    ad1Error(err) {
+        console.error('Banner 广告加载失败', err)
+    },
 })

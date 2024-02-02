@@ -6,6 +6,7 @@ const { toDateString, isEmpty } = require("xe-utils")
 
 Page({
     data: {
+        adStatus: 0,//0视频,1视频贴片,2banner
         calendarShow: false,
         calendarDay: "",
         calendarWeek: "",
@@ -44,6 +45,9 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
+        this.setData({
+            adStatus: 0
+        });
         const trainData = wx.getStorageSync('selectTrain');
         wx.removeStorageSync('selectTrain')
         if (!isEmpty(trainData)) {
@@ -156,5 +160,56 @@ Page({
     },
     scrollView({ detail }) {
         console.log(detail);
-    }
+    },
+
+    adspLoad() {
+        console.log('视频广告 广告加载成功')
+
+        wx.reportEvent && wx.reportEvent("wxdata_perf_monitor", {
+            "wxdata_perf_monitor_id": "视频广告 广告加载成功",
+            "wxdata_perf_monitor_level": 1,
+            "wxdata_perf_error_code": 0,
+            "wxdata_perf_error_msg": "",
+            "wxdata_perf_cost_time": 0
+        })
+
+    },
+    adspError(err) {
+        console.error('视频广告 广告加载失败', err)
+        this.setData({
+            adStatus: 1
+        });
+    },
+
+    onsptpAdplay() {
+        console.log('视频贴片广告 播放开始')
+    },
+    onsptpAdload() {
+        wx.reportEvent && wx.reportEvent("wxdata_perf_monitor", {
+            "wxdata_perf_monitor_id": "视频贴片广告 加载成功",
+            "wxdata_perf_monitor_level": 1,
+            "wxdata_perf_error_code": 0,
+            "wxdata_perf_error_msg": "",
+            "wxdata_perf_cost_time": 0
+        })
+    },
+    onsptpAdError(err) {
+        console.error('视频贴片广告 加载失败', err)
+        this.setData({
+            adStatus: 2
+        });
+    },
+    adbanLoad() {
+        wx.reportEvent && wx.reportEvent("wxdata_perf_monitor", {
+            "wxdata_perf_monitor_id": "Banner 广告加载成功",
+            "wxdata_perf_monitor_level": 1,
+            "wxdata_perf_error_code": 0,
+            "wxdata_perf_error_msg": "",
+            "wxdata_perf_cost_time": 0
+        })
+    },
+    adbanError(err) {
+        console.error('Banner 广告加载失败', err)
+    },
+
 })
